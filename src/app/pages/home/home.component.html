@@ -1,0 +1,11 @@
+<div class="home-container">
+    <h1>Pokémon List</h1>
+    <div *ngIf="isLoading" class="loading">Loading...</div>
+    <div class="cards-container" *ngIf="!isLoading">
+      <div class="card" *ngFor="let pokemon of pokemons">
+        <h2>{{ pokemon.name | titlecase }}</h2>
+        <a [href]="pokemon.url" target="_blank">Details</a>
+      </div>
+    </div>
+  </div>
+  
