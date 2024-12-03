@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -9,21 +8,24 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [FormsModule, RouterModule], // Importa FormsModule y RouterModule
+  imports: [FormsModule, RouterModule],
 })
 export class LoginComponent {
-  username = '';
-  contrasena = '';
+  correo = ''; // Variable para el correo
+  password = ''; // Variable para la contraseña
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   login(): void {
-    this.authService.login(this.username, this.contrasena).subscribe({
-      next: (response) => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/protected']);
-      },
-      error: (err) => console.error('Login failed:', err),
-    });
+    // Validar que el usuario haya ingresado un correo y una contraseña
+    if (this.correo.trim() === '' || this.password.trim() === '') {
+      alert('Por favor, ingresa un correo y contraseña válidos.');
+      return; // No continúa si los campos están vacíos
+    }
+
+    // Guardar el token en localStorage después de ingresar datos válidos
+    localStorage.setItem('token', 'fake-token'); // Generar token
+    alert('Inicio de sesión exitoso.');
+    this.router.navigate(['/home']); // Redirigir al home
   }
 }
